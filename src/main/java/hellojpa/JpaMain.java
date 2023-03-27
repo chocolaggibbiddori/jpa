@@ -15,8 +15,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member findMember = em.find(Member.class, 2L);
-            findMember.setName("helloJPA");
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
+
+            System.out.println("=== BEFORE ===");
+            em.persist(member); //영속
+            System.out.println("=== AFTER ===");
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
