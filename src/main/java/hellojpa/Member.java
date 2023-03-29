@@ -6,24 +6,23 @@ import javax.persistence.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-    @Column(name = "name", nullable = false)
+    @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private Long id;
+    @Column(name = "USERNAME")
     private String username;
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Member() {
     }
 
-    public Member(String id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,5 +32,13 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
