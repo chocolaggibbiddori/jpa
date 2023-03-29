@@ -11,6 +11,9 @@ public class Member {
     private Long id;
     @Column(name = "USERNAME")
     private String username;
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public Member() {
     }
