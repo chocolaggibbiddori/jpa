@@ -2,8 +2,8 @@ package hellojpa;
 
 import javax.persistence.*;
 
-//@Entity
-public class Locker {
+@Entity
+public class Locker extends BaseEntity {
 
     @Id
     @GeneratedValue
