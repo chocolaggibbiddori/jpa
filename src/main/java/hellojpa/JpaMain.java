@@ -15,6 +15,15 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Movie movie = new Movie("바람과 함께 사라지다", 10000, "감독", "배우");
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie.getName());
+
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
