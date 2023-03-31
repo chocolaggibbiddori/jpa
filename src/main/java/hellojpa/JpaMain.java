@@ -1,7 +1,5 @@
 package hellojpa;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,16 +15,20 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
             Member member = new Member();
             member.setUsername("user1");
+            member.setTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println("refMember = " + refMember.getClass()); //프록시
-            Hibernate.initialize(refMember); //강제 초기화
+            Member findMember = em.find(Member.class, member.getId());
+            System.out.println("findMember = " + findMember.getTeam().getClass());
 
             tx.commit();
         } catch (Exception e) {
