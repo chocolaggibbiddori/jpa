@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
 
@@ -12,18 +13,12 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setHomeAddress(new Address("city1", "street1", "zipcode1"));
+            List<Member> result = em.createQuery(
+                    "select m from Member m where m.username like '%kim%'", Member.class).getResultList();
 
-            member1.getFavoriteFoods().add("치킨");
-            member1.getFavoriteFoods().add("족발");
-            member1.getFavoriteFoods().add("피자");
-
-            member1.getAddressHistory().add(new Address("old1", "street1", "zipcode1"));
-            member1.getAddressHistory().add(new Address("old2", "street1", "zipcode1"));
-
-            em.persist(member1);
+            for (Member member : result) {
+                System.out.println("member = " + member.getUsername());
+            }
 
             tx.commit();
         } catch (Exception e) {
