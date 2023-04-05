@@ -34,10 +34,11 @@ public class Main {
 
             System.out.println("team = " + team.getMembers().size());
 
-            String query = "SELECT t.members.size FROM Team t";
-            List<Integer> result = em.createQuery(query, Integer.class).getResultList();
+            //"SELECT group_concat(m.username) FROM Member m"
+            String query = "SELECT function('group_concat', m.username) FROM Member m";
+            List<String > result = em.createQuery(query, String.class).getResultList();
 
-            for (Integer s : result) {
+            for (String s : result) {
                 System.out.println("s = " + s);
             }
 
