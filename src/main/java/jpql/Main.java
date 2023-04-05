@@ -42,7 +42,7 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "SELECT t FROM Team t JOIN FETCH t.members";
+            String query = "SELECT DISTINCT t FROM Team t JOIN FETCH t.members";
             List<Team> result = em.createQuery(query, Team.class).getResultList();
             for (Team team : result) {
                 System.out.println("team = " + team.getName() + ", " + team.getMembers());
