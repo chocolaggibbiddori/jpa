@@ -20,20 +20,24 @@ public class Main {
             team.setName("teamA");
             em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("관리자");
-            member.setAge(10);
-            member.changeTeam(team);
-            member.setType(MemberType.ADMIN);
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("관리자1");
+            member1.changeTeam(team);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("관리자2");
+            em.persist(member2);
 
             em.flush();
             em.clear();
 
-            String query = "SELECT NULLIF(m.username, '관리자') FROM Member m";
-            List<String> result = em.createQuery(query, String.class).getResultList();
+            System.out.println("team = " + team.getMembers().size());
 
-            for (String s : result) {
+            String query = "SELECT t.members.size FROM Team t";
+            List<Integer> result = em.createQuery(query, Integer.class).getResultList();
+
+            for (Integer s : result) {
                 System.out.println("s = " + s);
             }
 
