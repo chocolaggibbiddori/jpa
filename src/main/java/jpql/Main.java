@@ -30,14 +30,17 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "SELECT m.username, 'HELLO', true FROM Member m " +
-                    "WHERE m.type = jpql.MemberType.USER";
-            List<Object[]> result = em.createQuery(query).getResultList();
+            String query = "SELECT " +
+                    "CASE " +
+                    "WHEN m.age <= 10 THEN '학생요금' " +
+                    "WHEN m.age >= 60 THEN '경로요금' " +
+                    "ELSE '일반요금' " +
+                    "END " +
+                    "FROM Member m";
+            List<String> result = em.createQuery(query, String.class).getResultList();
 
-            for (Object[] objects : result) {
-                System.out.println("objects = " + objects[0]);
-                System.out.println("objects = " + objects[1]);
-                System.out.println("objects = " + objects[2]);
+            for (String s : result) {
+                System.out.println("s = " + s);
             }
 
             tx.commit();
