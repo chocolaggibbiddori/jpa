@@ -21,7 +21,7 @@ public class Main {
             em.persist(team);
 
             Member member = new Member();
-//            member.setUsername("member1");
+            member.setUsername("관리자");
             member.setAge(10);
             member.changeTeam(team);
             member.setType(MemberType.ADMIN);
@@ -30,7 +30,7 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "SELECT COALESCE(m.username, '이름 없는 회원') FROM Member m";
+            String query = "SELECT NULLIF(m.username, '관리자') FROM Member m";
             List<String> result = em.createQuery(query, String.class).getResultList();
 
             for (String s : result) {
