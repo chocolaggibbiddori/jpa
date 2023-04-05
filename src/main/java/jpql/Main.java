@@ -42,10 +42,10 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "SELECT m FROM Member m JOIN FETCH m.team";
-            List<Member> result = em.createQuery(query, Member.class).getResultList();
-            for (Member member : result) {
-                System.out.println("member = " + member + ", " + member.getTeam().getName());
+            String query = "SELECT t FROM Team t JOIN FETCH t.members";
+            List<Team> result = em.createQuery(query, Team.class).getResultList();
+            for (Team team : result) {
+                System.out.println("team = " + team.getName() + ", " + team.getMembers());
             }
 
             tx.commit();
