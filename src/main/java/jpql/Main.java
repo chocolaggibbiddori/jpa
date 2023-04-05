@@ -21,7 +21,7 @@ public class Main {
             em.persist(team);
 
             Member member = new Member();
-            member.setUsername("member1");
+//            member.setUsername("member1");
             member.setAge(10);
             member.changeTeam(team);
             member.setType(MemberType.ADMIN);
@@ -30,13 +30,7 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "SELECT " +
-                    "CASE " +
-                    "WHEN m.age <= 10 THEN '학생요금' " +
-                    "WHEN m.age >= 60 THEN '경로요금' " +
-                    "ELSE '일반요금' " +
-                    "END " +
-                    "FROM Member m";
+            String query = "SELECT COALESCE(m.username, '이름 없는 회원') FROM Member m";
             List<String> result = em.createQuery(query, String.class).getResultList();
 
             for (String s : result) {
