@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Main {
 
@@ -41,19 +42,13 @@ public class Main {
             em.flush();
             em.clear();
 
-            //엔티티 직접 사용 - 기본 키를 사용함
-            String query1 = "SELECT m FROM Member m WHERE m = :member";
-            Member findMember1 = em.createQuery(query1, Member.class)
-                    .setParameter("member", member1)
-                    .getSingleResult();
-            System.out.println("findMember1 = " + findMember1);
-
-            //기본 키 사용
-            String query2 = "SELECT m FROM Member m WHERE m.id = :memberId";
-            Member findMember2 = em.createQuery(query2, Member.class)
-                    .setParameter("memberId", member2.getId())
-                    .getSingleResult();
-            System.out.println("findMember2 = " + findMember2);
+            String query = "SELECT m FROM Member m WHERE m.team = :team";
+            List<Member> findMember = em.createQuery(query, Member.class)
+                    .setParameter("team", teamA)
+                    .getResultList();
+            for (Member member : findMember) {
+                System.out.println("member = " + member + ", team = " + member.getTeam().getName());
+            }
 
             tx.commit();
         } catch (Exception e) {
